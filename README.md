@@ -21,12 +21,12 @@ connect ESP32 to AWS IoT.
 
 '2.' and '3.' installs an operation system to ESP32 (Greengrass or FreeRTOS).
 That should be the standard way to develop an IoT, but I would like to try
-something else :) Therefore we will go with '1.'
+something else. Therefore we will go with '1.'
 
-/* --- */
+---
 ## Screenshot
 
-/* --- */
+---
 ## Overview
 
 1. Test ESP32
@@ -44,8 +44,8 @@ something else :) Therefore we will go with '1.'
 
 4. Create IoT device on AWS
 
-/* --- */
 
+---
 ## Test ESP32
 
 ### ESP32 and SE012
@@ -77,7 +77,7 @@ Here we will use photoresistor (=LDR) SE012 by IDUINO. The signal pin-out will b
 We do not even need a breadboard.
 
 
-### CABEL!!!!
+### CABLE!!!!
 
 ESP32 use USB mini to communicate to our laptop.
 
@@ -141,8 +141,8 @@ We have to write two files
 1. ```main.cpp```
 2. ```secrets.h```
 
-1. is the sketch that we will upload to ESP32.
-2. is the file that contains certificates needed to connect to AWS IoT. ```secrets.h```
+'1.' is the sketch that we will upload to ESP32.
+'2.' is the file that contains certificates needed to connect to AWS IoT. ```secrets.h```
    is called from ```main.cpp```.
 
 I created my ```main.cpp``` chaning the tutorial code here and there.
@@ -163,11 +163,109 @@ tutorial](https://aws.amazon.com/jp/blogs/compute/building-an-aws-iot-core-devic
 at the section "Installing and configuring the Arduino IDE".
 
 
-## Certificates (```secrets.h```)
+------------------------
+## Certificates
+
+This section is about ```secrets.h```.
+
+In order for our device (ESP32) to talk to AWS IoT we need the following keys and certificate.
+
+1. IoT device private key
+2. IoT device public key
+3. IoT device certificate
+4. AWS root CA
 
 
+### IoT device
+
+A big update since the official tutorial is that now we can download
+1-3 in one go. At the time 2020, we had to download one by one (we
+still have to get AWS root CA separately, though).
 
 
+On AWS IoT console (we will go through it again in the next section)
+click
+
+and you will find ```connect_device_packages.zip``` on your Downloads folder.
+
+When you unzip ```connect_device_packages.zip``` you will get
+
+```
+start.sh
+ESP32-LDR.public.key    <- this is device public key
+ESP32-LDR.private.key   <- this is device private key
+ESP32-LDR.cert.pem      <- this is device certificate
+ESP32-LDR-Policy
+```
+
+(Here ```ESP32-LDR``` is the arbitrary name that you put when you
+created IoT device on AWS console.)
+
+### AWS Root CA
+I took it from [here](https://www.amazontrust.com/repository/).
+Pick "CA 1" and "PEM". 
+
+
+### Put them in ```secrets.h```
+
+We will put 
+
+- private key
+- device certificate
+- AWS root CA
+
+in ``secrets.h```.
+
+The template file of ```secrets.h``` looks like this.
+
+```
+#include <pgmspace.h>
+
+#define SECRET
+#define THINGNAME "ESP32-LDR"          // <==== This is your device name
+
+const char WIFI_SSID[] = "";           // <==== Your local WiFi network name
+const char WIFI_PASSWORD[] = "";       // <==== Your WiFi password
+const char AWS_IOT_ENDPOINT[] = "";    // <==== IoT device name. Something like "XXXXzXXXX.iot.eu-central-1.amazonaws.com"
+
+// Amazon Root CA 1
+static const char AWS_CERT_CA[] PROGMEM = R"EOF(
+-----BEGIN CERTIFICATE-----
+-----END CERTIFICATE-----
+)EOF";
+
+// Device Certificate
+static const char AWS_CERT_CRT[] PROGMEM = R"KEY(
+-----BEGIN CERTIFICATE-----
+-----END CERTIFICATE-----
+)KEY";
+
+// Device Private Key
+static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
+-----BEGIN RSA PRIVATE KEY-----
+-----END RSA PRIVATE KEY-----
+)KEY";
+```
+
+
+Set each of the content of the files you extracted (Device) or downloaded from AWS (CA) in
+```secrets.h```
+
+*** NOTE ***
+
+* Just do
+
+```
+> cat ESP32-LDR.private.key
+[meg@elias ~/aws/iot/secrets]$ \cat ESP32-LDR.private.key
+-----BEGIN RSA PRIVATE KEY-----
+....
+-----END RSA PRIVATE KEY-----
+```
+
+and cut and paste the whole output to the suited part of ```secrets.h``` __including__ "-----BEGIN RSA PRIVATE KEY-----" and "-----END RSA PRIVATE KEY-----".
+
+* You do not need to touch up with ```echo -n``` or anything. 
 
 
 ------------------------
