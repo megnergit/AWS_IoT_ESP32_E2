@@ -23,12 +23,12 @@ connect ESP32 to AWS IoT.
 That should be the standard way to develop an IoT, but I would like to try
 something else. Therefore we will go with '1.'
 
-[//]: #  ---
+<!-- ================================================== -->     
 ## Screenshot
 
 ![MQTTtest](./images/MQTTtest.gif)
 
-[//]: #  ---
+<!-- ================================================== -->     
 ## Overview
 
 1. Test ESP32
@@ -48,7 +48,7 @@ something else. Therefore we will go with '1.'
 4. Create IoT device on AWS
 
 
-[//]: #  ---
+<!-- ================================================== -->     
 ## Test ESP32
 
 ### ESP32 and SE012
@@ -102,7 +102,7 @@ One can read sensor output
 * ```curl``` or
 * web browser
 
-[//]: #  ------------------------
+<!-- ================================================== -->     
 ## PlatformIO
 
 PlatformIO is an extention for VS code.
@@ -119,7 +119,7 @@ One big plus is
 * (Almost) no need to install libraries one by one. PlatformIO will take care of it.
 
 
-[//]: #  ------------------------
+<!-- ================================================== -->     
 ## Write sketch
 
 Create a new project following the official instruction of PlatformIO.
@@ -166,7 +166,7 @@ tutorial](https://aws.amazon.com/jp/blogs/compute/building-an-aws-iot-core-devic
 at the section "Installing and configuring the Arduino IDE".
 
 
-[//]: #  ------------------------
+<!-- ================================================== -->     
 ## Certificates
 
 This section is about ```secrets.h```.
@@ -276,7 +276,7 @@ and cut and paste the whole output to the suited part of ```secrets.h``` __inclu
 You do not need to touch up the text with ```echo -n``` or anything. 
 
 
-[//]: #  ------------------------
+<!-- ================================================== -->     
 ## AWS IoT
 
 ### Create IoT device
@@ -285,6 +285,8 @@ Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](h
 
 
 1. Go to https://aws.amazon.com -> AWS IoT
+
+![Library you need](./images/platformio-01.png)
 
 2. 'Connect device'
 
@@ -331,22 +333,16 @@ of your device. In my case 'ESP32-LDR'). Like this. => 'Create'
 
 
 
-------------------------
 ### Test MQTT message
 
 19. Form the left column of IoT console, click on 'MQTT test client'.
 
 20. 'Subscribe to a topic'. Type in 'esp32/pub' (like we put in 'ESP32Policy'),
-and click on 'Subscribe'.
-
-21
+and click on 'Subscribe'. You should see the reading of the LDR like the screenshot at the begining of this README.
 
 
-
-
-
-------------------------
-### Troubleshooting
+<!-- ================================================== -->     
+## Troubleshooting
 
 ```[  2194][E][WiFiClientSecure.cpp:144] connect(): start_ssl_client: -29312
 .[  3886][E][ssl_client.cpp:37] _handle_error(): [start_ssl_client():273]: (-29312) SSL - The connection indicated an EOF```
@@ -359,16 +355,12 @@ and click on 'Subscribe'.
 
 
 
-
-
-
-
    
 
 
 
 
----
+------
 # END
 
 
