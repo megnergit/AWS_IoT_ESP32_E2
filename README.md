@@ -1,4 +1,4 @@
-# Connect ESP32 to AWS IOT
+# Connect ESP32 to AWS IoT
 
 ## Goal
 We will use
@@ -23,10 +23,12 @@ connect ESP32 to AWS IoT.
 That should be the standard way to develop an IoT, but I would like to try
 something else. Therefore we will go with '1.'
 
----
+[//]: #  ---
 ## Screenshot
 
----
+![MQTTtest](./images/MQTTtest.gif)
+
+[//]: #  ---
 ## Overview
 
 1. Test ESP32
@@ -41,11 +43,12 @@ something else. Therefore we will go with '1.'
 3. Write sketch (=code) for ESP32 and AWS IoT
    + main.cpp
    + secrets.h (to hold AWS certificates to connect to AWS IoT)
+   + compile main.cpp with secrets.h and write the code to ESP32
 
 4. Create IoT device on AWS
 
 
----
+[//]: #  ---
 ## Test ESP32
 
 ### ESP32 and SE012
@@ -99,7 +102,7 @@ One can read sensor output
 * ```curl``` or
 * web browser
 
-------------------------
+[//]: #  ------------------------
 ## PlatformIO
 
 PlatformIO is an extention for VS code.
@@ -116,7 +119,7 @@ One big plus is
 * (Almost) no need to install libraries one by one. PlatformIO will take care of it.
 
 
-------------------------
+[//]: #  ------------------------
 ## Write sketch
 
 Create a new project following the official instruction of PlatformIO.
@@ -163,7 +166,7 @@ tutorial](https://aws.amazon.com/jp/blogs/compute/building-an-aws-iot-core-devic
 at the section "Installing and configuring the Arduino IDE".
 
 
-------------------------
+[//]: #  ------------------------
 ## Certificates
 
 This section is about ```secrets.h```.
@@ -191,11 +194,13 @@ and you will find ```connect_device_packages.zip``` on your Downloads folder.
 When you unzip ```connect_device_packages.zip``` you will get
 
 ```
-start.sh
-ESP32-LDR.public.key    <- this is device public key
-ESP32-LDR.private.key   <- this is device private key
-ESP32-LDR.cert.pem      <- this is device certificate
-ESP32-LDR-Policy
+> unzip connect_device_package.zip
+Archive:  connect_device_package.zip
+ extracting: ESP32-LDR.cert.pem
+ extracting: ESP32-LDR.public.key
+ extracting: ESP32-LDR.private.key
+ extracting: ESP32-LDR-Policy
+ extracting: start.sh
 ```
 
 (Here ```ESP32-LDR``` is the arbitrary name that you put when you
@@ -248,10 +253,10 @@ static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
 ```
 
 
-Set each of the content of the files you extracted (Device) or downloaded from AWS (CA) in
-```secrets.h```
+Set each of the content of the files you extracted (for device) or
+downloaded from AWS (for CA) in ```secrets.h```
 
-*** NOTE ***
+**Note**
 
 * Just do
 
@@ -263,22 +268,108 @@ Set each of the content of the files you extracted (Device) or downloaded from A
 -----END RSA PRIVATE KEY-----
 ```
 
-and cut and paste the whole output to the suited part of ```secrets.h``` __including__ "-----BEGIN RSA PRIVATE KEY-----" and "-----END RSA PRIVATE KEY-----".
+and cut and paste the whole output to the suited part of ```secrets.h``` __including__
 
-* You do not need to touch up with ```echo -n``` or anything. 
+* "-----BEGIN RSA PRIVATE KEY-----" and
+* "-----END RSA PRIVATE KEY-----".
+
+You do not need to touch up the text with ```echo -n``` or anything. 
+
+
+[//]: #  ------------------------
+## AWS IoT
+
+### Create IoT device
+
+Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](https://aws.amazon.com/jp/blogs/compute/building-an-aws-iot-core-device-using-aws-serverless-and-an-esp32/) is our guide. 
+
+
+1. Go to https://aws.amazon.com -> AWS IoT
+
+2. 'Connect device'
+
+3. 'Copy' device name ('XXXXXXXX.iot.eu-central-1.amazonaws.com' or similar)
+
+4. 'Next'
+
+5. Put the name of your device (here I set 'ESP32-LDR') and 'Next'.
+
+6. Pick
+   * Linux / macOS
+   * Python
+   and 'Next'
+
+7. __Download connection kit__
+   Press 'Download conenction kit' button. You got ```connect_device_packages.zip``` here.
+   Use it to fill ```secrets.h``` in the previous section
+   => 'Next'
+
+8. 'Continue' (we do not use ```start.sh``` as we do not have linux on our ESP32)
+
+9. 'Device is connected' (actually not yet) => 'View thing'
+    You see a page for your device.
+
+10. All right. From the left column of that device page, go to 'Security' then => 'Policies'.
+
+11. 'Create policy'
+
+12. Let us create a policy names 'ESP32Policy' (or of your choice). 
+
+13. Click on 'JSON'.
+
+14. [__Paste the policy from the tutorial__](https://aws.amazon.com/jp/blogs/compute/building-an-aws-iot-core-device-using-aws-serverless-and-an-esp32/). The one from 'Creating an AWS IoT device'
+
+15. Change _3_ parts. 'REGION' (e.g. `eu-central-1`), 'ACCOUNT_ID'
+(usual 12-digit numbers) _and_ 'MyNewESP32' (the last one to the name
+of your device. In my case 'ESP32-LDR'). Like this. => 'Create'
+
+16. Go back to your device from the left column 'All devices' -> 'Things'.
+
+17. Click on 'Certificates' in the tabs on the bottom. Click on the Certificate ID (long random text).
+
+18. Click on 'Attach policy'. Attach the policy we creatd on 14.
+
 
 
 ------------------------
-## AWS IoT
+### Test MQTT message
 
+19. Form the left column of IoT console, click on 'MQTT test client'.
+
+20. 'Subscribe to a topic'. Type in 'esp32/pub' (like we put in 'ESP32Policy'),
+and click on 'Subscribe'.
+
+21
+
+
+
+
+
+------------------------
+### Troubleshooting
+
+```[  2194][E][WiFiClientSecure.cpp:144] connect(): start_ssl_client: -29312
+.[  3886][E][ssl_client.cpp:37] _handle_error(): [start_ssl_client():273]: (-29312) SSL - The connection indicated an EOF```
+=> problem in ```secrets.h```. Redo the editing again.
+
+
+```<Arduino.h> is missing``` => do not use '->' button of VS code, but select 'Build' from the drop-down menu.
+
+
+
+
+
+
+
+
+
+   
 
 
 
 
 ---
 # END
-
-
 
 
 
