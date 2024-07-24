@@ -286,8 +286,6 @@ Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](h
 
 1. Go to https://aws.amazon.com -> AWS IoT
 
-![Library you need](./images/platformio-01.png)
-
 2. 'Connect device'
 
 ![Connect evice](./images/create_device.png)
