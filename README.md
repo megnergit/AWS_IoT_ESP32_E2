@@ -353,15 +353,24 @@ of your device. In my case 'ESP32-LDR'). Like this. => 'Create'
 
 ![Go back to your device](./images/back_to_device.png)
 
+
 17. Click on 'Certificates' in the tabs on the bottom. Click on the Certificate ID (long random text).
+
+![Click on certificates](./images/click_on_certificate.png)
+
+![Click on poliicy](./images/click_on_policy.png)
 
 18. Click on 'Attach policy'. Attach the policy we creatd on 14.
 
+![Attach poliicy](./images/attach_policy.png)
 
 
 ### Test MQTT message
 
 19. Form the left column of IoT console, click on 'MQTT test client'.
+
+![MQTT test client](./images/mqtt_client)
+
 
 20. 'Subscribe to a topic'. Type in 'esp32/pub' (like we put in 'ESP32Policy'),
 and click on 'Subscribe'. You should see the reading of the LDR like the screenshot at the begining of this README.
