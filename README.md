@@ -294,7 +294,7 @@ Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](h
 
 3. 'Copy' device name ('XXXXXXXX.iot.eu-central-1.amazonaws.com' or similar)
 
-![Copy device name](./images/create_device.png)
+![Copy device name](./images/copy_device_name.png)
 
 4. 'Next'
 
@@ -317,19 +317,30 @@ Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](h
 
 ![Download connection kit](./images/download_connection_kit.png)
 
-
 8. 'Continue' (we do not use ```start.sh``` as we do not have linux on our ESP32)
 
 9. 'Device is connected' (actually not yet) => 'View thing'
     You see a page for your device.
 
+![Device is connected](./images/device_is_connected)
+
+
 10. All right. From the left column of that device page, go to 'Security' then => 'Policies'.
+
+![Security to Policies](./images/security_to_policies.png)
+
 
 11. 'Create policy'
 
+![Create policy](./images/create_policy.png)
+
 12. Let us create a policy names 'ESP32Policy' (or of your choice). 
 
+![Policy name](./images/policy_name.png)
+
 13. Click on 'JSON'.
+
+![We are creating JSON policy](./images/create_json_policy.png)
 
 14. [__Paste the policy from the tutorial__](https://aws.amazon.com/jp/blogs/compute/building-an-aws-iot-core-device-using-aws-serverless-and-an-esp32/). The one from 'Creating an AWS IoT device'
 
@@ -338,6 +349,9 @@ Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](h
 of your device. In my case 'ESP32-LDR'). Like this. => 'Create'
 
 16. Go back to your device from the left column 'All devices' -> 'Things'.
+
+
+![Go back to your device](./images/back_to_device.png)
 
 17. Click on 'Certificates' in the tabs on the bottom. Click on the Certificate ID (long random text).
 
