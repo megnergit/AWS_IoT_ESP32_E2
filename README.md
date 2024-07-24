@@ -322,7 +322,7 @@ Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](h
 9. 'Device is connected' (actually not yet) => 'View thing'
     You see a page for your device.
 
-![Device is connected](./images/device_is_connected)
+![Device is connected](./images/device_is_connected.png)
 
 
 10. All right. From the left column of that device page, go to 'Security' then => 'Policies'.
