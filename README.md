@@ -379,18 +379,15 @@ and click on 'Subscribe'. You should see the reading of the LDR like the screens
 <!-- ================================================== -->     
 ## Troubleshooting
 
-```[  2194][E][WiFiClientSecure.cpp:144] connect(): start_ssl_client: -29312
+* ```[  2194][E][WiFiClientSecure.cpp:144] connect(): start_ssl_client: -29312
 .[  3886][E][ssl_client.cpp:37] _handle_error(): [start_ssl_client():273]: (-29312) SSL - The connection indicated an EOF```
 => problem in ```secrets.h```. Redo the editing again.
 
 
-```<Arduino.h> is missing``` => do not use '->' button of VS code, but select 'Build' from the drop-down menu.
+* ```<Arduino.h> is missing``` => do not use '->' button of VS code, but select 'Build' from the drop-down menu.
 
-
-
-
-***
-# END
+------
+## END
 
 
 
