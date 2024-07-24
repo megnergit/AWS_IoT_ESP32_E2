@@ -290,21 +290,33 @@ Okay, now let us start working with AWS IoT. Again (a bit outdated) [tutorial](h
 
 2. 'Connect device'
 
+![Connect evice](./images/create_device.png)
+
 3. 'Copy' device name ('XXXXXXXX.iot.eu-central-1.amazonaws.com' or similar)
+
+![Copy device name](./images/create_device.png)
 
 4. 'Next'
 
 5. Put the name of your device (here I set 'ESP32-LDR') and 'Next'.
+
+![Name of your device](./images/name_of_your_device.png)
 
 6. Pick
    * Linux / macOS
    * Python
    and 'Next'
 
+![Linux platform](./images/linux_platform.png)
+
+
 7. __Download connection kit__
    Press 'Download conenction kit' button. You got ```connect_device_packages.zip``` here.
    Use it to fill ```secrets.h``` in the previous section
    => 'Next'
+
+![Download connection kit](./images/download_connection_kit.png)
+
 
 8. 'Continue' (we do not use ```start.sh``` as we do not have linux on our ESP32)
 
@@ -354,13 +366,8 @@ and click on 'Subscribe'. You should see the reading of the LDR like the screens
 
 
 
+---
 
-   
-
-
-
-
-------
 # END
 
 
