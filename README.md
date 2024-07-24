@@ -369,7 +369,7 @@ of your device. In my case 'ESP32-LDR'). Like this. => 'Create'
 
 19. Form the left column of IoT console, click on 'MQTT test client'.
 
-![MQTT test client](./images/mqtt_client)
+![MQTT test client](./images/mqtt_client.png)
 
 
 20. 'Subscribe to a topic'. Type in 'esp32/pub' (like we put in 'ESP32Policy'),
